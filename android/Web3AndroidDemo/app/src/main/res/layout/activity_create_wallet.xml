@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_dark">
+
+    <!-- TopBar -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:elevation="0dp">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@android:color/transparent"
+            app:title="@string/title_create_wallet"
+            app:titleTextColor="@color/text_primary"
+            app:navigationIconTint="@color/text_primary" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="24dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="32dp">
+
+            <!-- 顶部图标 + 说明 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:paddingVertical="24dp">
+
+                <LinearLayout
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:gravity="center"
+                    android:background="@drawable/bg_icon_circle_brand">
+
+                    <ImageView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/ic_wallet_logo"
+                        android:contentDescription="@null" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_create_wallet"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginTop="14dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/result_tip"
+                    android:textSize="13sp"
+                    android:textColor="@color/text_secondary"
+                    android:layout_marginTop="6dp"
+                    android:gravity="center" />
+            </LinearLayout>
+
+            <!-- 结果区（初始隐藏） -->
+            <LinearLayout
+                android:id="@+id/layoutResult"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <!-- 钱包地址卡片 -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/card_surface"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
+                    app:strokeColor="@color/card_stroke"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="18dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/label_wallet_address"
+                                android:textSize="12sp"
+                                android:textColor="@color/brand_accent"
+                                android:textStyle="bold"
+                                android:letterSpacing="0.08" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnCopyAddress"
+                                style="@style/Widget.Material3.Button.TextButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="32dp"
+                                android:text="复制"
+                                android:textSize="12sp"
+                                android:textColor="@color/brand_accent"
+                                app:icon="@drawable/ic_copy"
+                                app:iconSize="14dp"
+                                app:iconTint="@color/brand_accent"
+                                app:iconPadding="4dp"
+                                android:paddingHorizontal="8dp" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tvAddress"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="—"
+                            android:textSize="14sp"
+                            android:textColor="@color/text_primary"
+                            android:fontFamily="monospace"
+                            android:layout_marginTop="8dp"
+                            android:lineSpacingMultiplier="1.5"
+                            android:textIsSelectable="true" />
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- 私钥卡片 -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    app:cardBackgroundColor="@color/card_surface"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
+                    app:strokeColor="#3DFF4444"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="18dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/label_private_key"
+                                android:textSize="12sp"
+                                android:textColor="#FF6B6B"
+                                android:textStyle="bold"
+                                android:letterSpacing="0.08" />
+
+                            <!-- 显示/隐藏切换 -->
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnTogglePrivateKey"
+                                style="@style/Widget.Material3.Button.TextButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="32dp"
+                                android:text="显示"
+                                android:textSize="12sp"
+                                android:textColor="@color/text_secondary"
+                                app:icon="@drawable/ic_eye"
+                                app:iconSize="14dp"
+                                app:iconTint="@color/text_secondary"
+                                app:iconPadding="4dp"
+                                android:paddingHorizontal="8dp" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnCopyPrivateKey"
+                                style="@style/Widget.Material3.Button.TextButton"
+                                android:layout_width="wrap_content"
+                                android:layout_height="32dp"
+                                android:text="复制"
+                                android:textSize="12sp"
+                                android:textColor="#FF6B6B"
+                                app:icon="@drawable/ic_copy"
+                                app:iconSize="14dp"
+                                app:iconTint="#FF6B6B"
+                                app:iconPadding="4dp"
+                                android:paddingHorizontal="8dp" />
+                        </LinearLayout>
+
+                        <!-- 私钥内容（默认遮罩） -->
+                        <TextView
+                            android:id="@+id/tvPrivateKey"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="—"
+                            android:textSize="14sp"
+                            android:textColor="@color/text_primary"
+                            android:fontFamily="monospace"
+                            android:layout_marginTop="8dp"
+                            android:lineSpacingMultiplier="1.5"
+                            android:textIsSelectable="true" />
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- 警告条 -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    app:cardBackgroundColor="#1AFF6B35"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp"
+                    app:strokeColor="#33FF6B35"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:padding="14dp">
+
+                        <TextView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:text="⚠"
+                            android:textSize="14sp"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/warning_private_key"
+                            android:textSize="12sp"
+                            android:textColor="#FFCC80"
+                            android:layout_marginStart="10dp"
+                            android:lineSpacingMultiplier="1.4" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
+            <!-- 加载状态 -->
+            <LinearLayout
+                android:id="@+id/layoutLoading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:paddingVertical="32dp"
+                android:visibility="gone">
+
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:indeterminate="true"
+                    app:indicatorColor="@color/brand_primary"
+                    app:trackColor="@color/card_surface" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/generating"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_secondary"
+                    android:layout_marginTop="14dp" />
+            </LinearLayout>
+
+            <View android:layout_width="0dp" android:layout_height="24dp" />
+
+            <!-- 生成按钮 -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnGenerate"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="@string/btn_generate_wallet"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:backgroundTint="@color/brand_primary"
+                app:cornerRadius="14dp"
+                app:icon="@drawable/ic_add_wallet"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp" />
+
+            <!-- 进入钱包按钮（仅生成成功后显示） -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnEnterWallet"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="12dp"
+                android:text="@string/btn_enter_wallet"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/brand_accent"
+                app:strokeColor="@color/brand_accent"
+                app:strokeWidth="1.5dp"
+                app:cornerRadius="14dp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

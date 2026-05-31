@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EthWallet</string>
+    <string name="slogan">Secure · Decentralized · Self-Custody</string>
+
+    <!-- MainActivity -->
+    <string name="create_wallet">Create New Wallet</string>
+    <string name="create_wallet_desc">Generate private key and wallet address</string>
+    <string name="import_wallet">Import Existing Wallet</string>
+    <string name="import_wallet_desc">Import wallet via private key</string>
+    <string name="security_tip">Your private key is stored only on this device. We cannot access your assets.</string>
+    <string name="error_private_key_empty">Please enter your private key</string>
+    <string name="error_private_key_invalid">Please enter a valid private key</string>
+
+    <!-- CreateWalletActivity -->
+    <string name="title_create_wallet">Create Wallet</string>
+    <string name="btn_generate_wallet">Generate Wallet</string>
+    <string name="btn_regenerate_wallet">Regenerate</string>
+    <string name="btn_enter_wallet">Enter Wallet</string>
+    <string name="label_wallet_address">Wallet Address</string>
+    <string name="label_private_key">Private Key</string>
+    <string name="copied">Copied to clipboard</string>
+    <string name="generating">Generating…</string>
+    <string name="warning_private_key">Keep your private key safe. Exposure will result in permanent loss of assets.</string>
+    <string name="result_tip">This information is saved only on this device. Back it up immediately.</string>
+    <string name="btn_show_private_key">Show</string>
+    <string name="btn_hide_private_key">Hide</string>
+    <string name="label_clipboard_address">Wallet Address</string>
+    <string name="label_clipboard_private_key">Private Key</string>
+    <string name="error_generate_failed">Generation failed: %s</string>
+    <string name="error_generate_unknown">Unknown error</string>
+    <string name="dialog_exit_title">Leave Create Page</string>
+    <string name="dialog_exit_message">Choose an action</string>
+    <string name="dialog_exit_back">Go Back</string>
+    <string name="dialog_exit_quit">Quit App</string>
+    <string name="dialog_exit_cancel">Cancel</string>
+
+    <!-- ImportWallet BottomSheet -->
+    <string name="title_import_wallet">Import Wallet</string>
+    <string name="hint_private_key">Enter hex private key (0x...)</string>
+    <string name="btn_import">Import Wallet</string>
+
+    <!-- WalletHomeActivity -->
+    <string name="title_wallet_home">My Wallet</string>
+    <string name="label_network">Current Network</string>
+    <string name="label_assets">Assets</string>
+    <string name="copied_address">Copy Address</string>
+    <string name="snack_address_copied">Address copied</string>
+    <string name="placeholder_network">-- Not Connected --</string>
+    <string name="network_sepolia">Sepolia Testnet</string>
+    <string name="network_mainnet">ETH Mainnet</string>
+    <string name="network_custom">Custom Network</string>
+    <string name="title_network_select">Select Network</string>
+    <string name="btn_add_network">Add Custom Network</string>
+    <string name="dialog_add_network_title">Add Network</string>
+    <string name="toast_network_url_invalid">Please enter a valid RPC URL (starting with http:// or https://)</string>
+    <string name="placeholder_address">0x0000…0000</string>
+    <string name="placeholder_balance">--</string>
+    <string name="placeholder_token_name">Token</string>
+    <string name="placeholder_token_symbol">--</string>
+    <string name="placeholder_token_address">0x1234…abcd</string>
+    <string name="eth_name">Ethereum</string>
+    <string name="btn_recreate_wallet">Switch Wallet</string>
+    <string name="btn_add_token">Add Token</string>
+
+    <!-- AddToken BottomSheet -->
+    <string name="dialog_add_token_title">Add ERC-20 Token</string>
+    <string name="dialog_add_token_desc">Add token asset via contract address</string>
+    <string name="dialog_add_token_hint">Enter contract address (0x…)</string>
+    <string name="dialog_add_token_confirm">Add</string>
+    <string name="dialog_add_token_cancel">Cancel</string>
+    <string name="dialog_add_token_tip">Token info will be fetched automatically. Please verify the address.</string>
+    <string name="toast_contract_empty">Please enter a contract address</string>
+    <string name="toast_contract_invalid">Please enter a valid ERC-20 contract address</string>
+    <string name="toast_token_added">Token added</string>
+    <string name="toast_token_exists">This token has already been added</string>
+    <string name="loading_token_info">Fetching token info…</string>
+
+    <!-- SplashActivity -->
+    <string name="splash_checking">Checking wallet…</string>
+    <string name="splash_sdk_init_fail">App init fail，Please check network</string>
+
+
+    <!-- QR Code Scan -->
+    <string name="btn_scan_qr">Scan QR Code</string>
+    <string name="qr_scan_prompt">Align the QR code within the frame to scan</string>
+    <string name="scan_error_read_image">Unable to read image</string>
+    <string name="scan_error_no_qr">No QR code detected. Please select a clear QR code image.</string>
+    <string name="scan_error_read_failed">Read failed: %s</string>
+    <string name="scan_permission_title">Camera Permission Required</string>
+    <string name="scan_permission_message">Scanning requires camera access. Please enable it in Settings.</string>
+    <string name="scan_permission_settings">Go to Settings</string>
+    <string name="btn_send">Send</string>
+    <string name="btn_receive">Receive</string>
+    <string name="title_send">Send Assets</string>
+    <string name="title_receive">Receive Assets</string>
+    <string name="receive_hint">Share the QR code or address below to receive funds</string>
+    <string name="qr_code_desc">Wallet address QR code</string>
+    <string name="btn_copy_address">Copy Address</string>
+    <string name="send_label_to">Recipient Address</string>
+    <string name="send_hint_to">Enter or scan recipient address (0x…)</string>
+    <string name="send_label_asset">Select Asset</string>
+    <string name="send_label_amount">Amount</string>
+    <string name="send_hint_amount">0.0</string>
+    <string name="btn_confirm_send">Confirm Send</string>
+    <string name="error_to_address_empty">Please enter recipient address</string>
+    <string name="error_amount_empty">Please enter amount</string>
+    <string name="error_amount_invalid">Please enter a valid amount</string>
+    <string name="send_loading">Sending, please wait…</string>
+    <string name="send_success">Transaction submitted. Waiting for confirmation.</string>
+    <string name="send_failed">Send failed. Please check your network or balance and try again.</string>
+    <string name="send_result_title_success">Sent Successfully</string>
+    <string name="send_result_title_failed">Send Failed</string>
+    <string name="send_result_done">Done</string>
+    <string name="send_result_retry">Retry</string>
+    <string name="send_result_cancel">Cancel</string>
+    <string name="btn_ok">OK</string>
+
+    <!-- SettingsActivity -->
+    <string name="title_settings">Settings</string>
+    <string name="settings_group_security">Account Security</string>
+    <string name="settings_view_private_key">View Private Key</string>
+    <string name="settings_view_private_key_desc">Show the private key of current account</string>
+    <string name="settings_private_key_empty">Private key not found</string>
+    <string name="settings_private_key_warning">⚠ Never screenshot or share your private key. Exposure leads to permanent loss of assets.</string>
+    <string name="btn_copy_key">Copy</string>
+    <string name="toast_key_copied">Private key copied to clipboard</string>
+</resources>

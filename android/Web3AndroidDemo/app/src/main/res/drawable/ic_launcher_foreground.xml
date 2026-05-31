@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- 外层六边形光晕（柔和发光感） -->
+    <path
+        android:fillColor="#33A89EFF"
+        android:pathData="M54,14 L88,33 L88,75 L54,94 L20,75 L20,33 Z" />
+
+    <!-- 外层六边形主体 -->
+    <path
+        android:fillColor="#6C63FF"
+        android:pathData="M54,18 L85,36 L85,72 L54,90 L23,72 L23,36 Z" />
+
+    <!-- 内层六边形（深色，营造立体感） -->
+    <path
+        android:fillColor="#4B44CC"
+        android:pathData="M54,28 L78,42 L78,66 L54,80 L30,66 L30,42 Z" />
+
+    <!-- 以太坊菱形上半部分（亮白） -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,34 L68,54 L54,48 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,34 L40,54 L54,48 Z" />
+
+    <!-- 以太坊菱形下半部分（半透明白，区分层次） -->
+    <path
+        android:fillColor="#CCFFFFFF"
+        android:pathData="M54,74 L68,54 L54,60 Z" />
+    <path
+        android:fillColor="#CCFFFFFF"
+        android:pathData="M54,74 L40,54 L54,60 Z" />
+
+    <!-- 中间腰带分割线（强调立体） -->
+    <path
+        android:fillColor="#99FFFFFF"
+        android:pathData="M40,54 L54,48 L68,54 L54,60 Z" />
+
+</vector>

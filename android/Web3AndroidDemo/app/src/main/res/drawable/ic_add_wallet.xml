@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 创建钱包图标（+ 符号） -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="28dp"
+    android:height="28dp"
+    android:viewportWidth="28"
+    android:viewportHeight="28">
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M13,4 L15,4 L15,13 L24,13 L24,15 L15,15 L15,24 L13,24 L13,15 L4,15 L4,13 L13,13 Z"/>
+</vector>

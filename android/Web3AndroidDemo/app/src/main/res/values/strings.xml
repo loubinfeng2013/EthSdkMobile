@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EthWallet</string>
+    <string name="slogan">安全 · 去中心化 · 自托管</string>
+
+    <!-- MainActivity -->
+    <string name="create_wallet">创建新钱包</string>
+    <string name="create_wallet_desc">一键生成私钥与钱包地址</string>
+    <string name="import_wallet">导入已有钱包</string>
+    <string name="import_wallet_desc">通过私钥导入已有钱包</string>
+    <string name="security_tip">您的私钥仅存储在本设备，我们无法访问您的资产</string>
+    <string name="error_private_key_empty">请输入私钥</string>
+    <string name="error_private_key_invalid">请输入合法私钥</string>
+
+    <!-- CreateWalletActivity -->
+    <string name="title_create_wallet">创建钱包</string>
+    <string name="btn_generate_wallet">生成钱包</string>
+    <string name="btn_regenerate_wallet">重新生成</string>
+    <string name="btn_enter_wallet">进入钱包</string>
+    <string name="label_wallet_address">钱包地址</string>
+    <string name="label_private_key">私钥</string>
+    <string name="copied">已复制到剪贴板</string>
+    <string name="generating">正在生成…</string>
+    <string name="warning_private_key">请妥善保管私钥，泄露将导致资产永久丢失</string>
+    <string name="result_tip">以下信息仅在本设备保存，请立即备份</string>
+    <string name="btn_show_private_key">显示</string>
+    <string name="btn_hide_private_key">隐藏</string>
+    <string name="label_clipboard_address">钱包地址</string>
+    <string name="label_clipboard_private_key">私钥</string>
+    <string name="error_generate_failed">生成失败：%s</string>
+    <string name="error_generate_unknown">未知错误</string>
+    <string name="dialog_exit_title">离开创建页面</string>
+    <string name="dialog_exit_message">请选择操作</string>
+    <string name="dialog_exit_back">回到上级页</string>
+    <string name="dialog_exit_quit">退出 App</string>
+    <string name="dialog_exit_cancel">取消</string>
+
+    <!-- ImportWallet BottomSheet -->
+    <string name="title_import_wallet">导入钱包</string>
+    <string name="hint_private_key">输入十六进制私钥（0x...）</string>
+    <string name="btn_import">导入钱包</string>
+
+    <!-- WalletHomeActivity -->
+    <string name="title_wallet_home">我的钱包</string>
+    <string name="label_network">当前网络</string>
+    <string name="label_assets">数字资产</string>
+    <string name="copied_address">复制地址</string>
+    <string name="snack_address_copied">地址已复制</string>
+    <string name="placeholder_network">-- 未连接 --</string>
+    <string name="network_sepolia">Sepolia 测试网</string>
+    <string name="network_mainnet">ETH 主网</string>
+    <string name="network_custom">自定义网络</string>
+    <string name="title_network_select">选择网络</string>
+    <string name="btn_add_network">添加自定义网络</string>
+    <string name="dialog_add_network_title">添加网络</string>
+    <string name="toast_network_url_invalid">请输入合法的 RPC 地址（以 http:// 或 https:// 开头）</string>
+    <string name="placeholder_address">0x0000…0000</string>
+    <string name="placeholder_balance">--</string>
+    <string name="placeholder_token_name">代币</string>
+    <string name="placeholder_token_symbol">--</string>
+    <string name="placeholder_token_address">0x1234…abcd</string>
+    <string name="eth_name">以太坊</string>
+    <string name="btn_recreate_wallet">切换钱包</string>
+    <string name="btn_add_token">添加代币</string>
+
+    <!-- AddToken BottomSheet -->
+    <string name="dialog_add_token_title">添加 ERC-20 代币</string>
+    <string name="dialog_add_token_desc">通过合约地址添加代币资产</string>
+    <string name="dialog_add_token_hint">输入合约地址（0x…）</string>
+    <string name="dialog_add_token_confirm">添加</string>
+    <string name="dialog_add_token_cancel">取消</string>
+    <string name="dialog_add_token_tip">代币信息将通过合约地址自动获取，请确保地址正确</string>
+    <string name="toast_contract_empty">请输入合约地址</string>
+    <string name="toast_contract_invalid">请输入合法的 ERC-20 合约地址</string>
+    <string name="toast_token_added">代币已添加</string>
+    <string name="toast_token_exists">该代币已添加过</string>
+    <string name="loading_token_info">正在获取代币信息…</string>
+
+    <!-- SplashActivity -->
+    <string name="splash_checking">正在检测钱包…</string>
+    <string name="splash_sdk_init_fail">App初始化失败，请检查网络</string>
+
+
+    <!-- 扫码页 -->
+    <string name="btn_scan_qr">扫描二维码</string>
+    <string name="qr_scan_prompt">将二维码对准框内进行扫描</string>
+    <string name="scan_error_read_image">无法读取图片</string>
+    <string name="scan_error_no_qr">未识别到二维码，请选择清晰的二维码图片</string>
+    <string name="scan_error_read_failed">读取失败：%s</string>
+    <string name="scan_permission_title">需要相机权限</string>
+    <string name="scan_permission_message">扫码功能需要使用相机，请在设置中开启相机权限。</string>
+    <string name="scan_permission_settings">去设置</string>
+    <string name="btn_send">发送</string>
+    <string name="btn_receive">接收</string>
+    <string name="title_send">发送资产</string>
+    <string name="title_receive">接收资产</string>
+    <string name="receive_hint">将下方二维码或地址发给对方，即可收款</string>
+    <string name="qr_code_desc">钱包地址二维码</string>
+    <string name="btn_copy_address">复制地址</string>
+    <string name="send_label_to">收款地址</string>
+    <string name="send_hint_to">输入或扫描收款地址（0x…）</string>
+    <string name="send_label_asset">选择币种</string>
+    <string name="send_label_amount">发送数量</string>
+    <string name="send_hint_amount">0.0</string>
+    <string name="btn_confirm_send">确认发送</string>
+    <string name="error_to_address_empty">请输入收款地址</string>
+    <string name="error_amount_empty">请输入发送数量</string>
+    <string name="error_amount_invalid">请输入有效数量</string>
+    <string name="send_loading">正在发送，请稍候…</string>
+    <string name="send_success">交易已提交至链上，请等待确认。</string>
+    <string name="send_failed">发送失败，请检查网络或余额后重试。</string>
+    <string name="send_result_title_success">发送成功</string>
+    <string name="send_result_title_failed">发送失败</string>
+    <string name="send_result_done">完成</string>
+    <string name="send_result_retry">重试</string>
+    <string name="send_result_cancel">取消</string>
+    <string name="btn_ok">确定</string>
+
+    <!-- SettingsActivity -->
+    <string name="title_settings">设置</string>
+    <string name="settings_group_security">账户安全</string>
+    <string name="settings_view_private_key">查看私钥</string>
+    <string name="settings_view_private_key_desc">显示当前账户的私钥</string>
+    <string name="settings_private_key_empty">未找到私钥</string>
+    <string name="settings_private_key_warning">⚠ 请勿截图或泄露私钥，泄露将导致资产永久丢失</string>
+    <string name="btn_copy_key">复制</string>
+    <string name="toast_key_copied">私钥已复制到剪切板</string>
+</resources>

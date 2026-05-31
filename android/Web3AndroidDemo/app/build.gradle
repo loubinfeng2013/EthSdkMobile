@@ -1,0 +1,74 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.web3.eth.android'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId "com.web3.eth.android"
+        minSdk 26
+        targetSdk 35
+        versionCode 1
+        versionName "1.0"
+    }
+
+    signingConfigs {
+        release {
+            storeFile file('web3wallet.jks')
+            storePassword 'Lbf@20260529'
+            keyAlias 'web3wallet'
+            keyPassword 'Lbf@20260529'
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    // 自定义输出 APK 路径和文件名
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            if (variant.buildType.name == 'release') {
+                def versionName = variant.versionName
+                def date = new Date().format('yyyyMMdd')
+                outputFileName = "Web3Wallet_v${versionName}_${date}.apk"
+                output.assemble.doLast {
+                    def outDir = rootProject.file("release")
+                    outDir.mkdirs()
+                    copy {
+                        from output.outputFile
+                        into outDir
+                    }
+                }
+            }
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.aar'])
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.0'
+    implementation 'androidx.gridlayout:gridlayout:1.0.0'
+    implementation 'androidx.navigation:navigation-fragment:2.8.4'
+    implementation 'androidx.navigation:navigation-ui:2.8.4'
+    implementation 'androidx.lifecycle:lifecycle-process:2.8.7'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
+}

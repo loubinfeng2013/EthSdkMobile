@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <!-- Android 12 及以下 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+
+    <application
+        android:name=".app.App"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MyApp">
+
+        <activity
+            android:name=".activity.SplashActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.MyApp">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".activity.MainActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:label="@string/app_name" />
+
+        <activity
+            android:name=".activity.CreateWalletActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:label="@string/title_create_wallet" />
+
+        <activity
+            android:name=".activity.WalletHomeActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:label="@string/title_wallet_home" />
+
+        <!-- 网络选择 -->
+        <activity
+            android:name=".activity.NetworkSelectActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:label="@string/title_network_select" />
+
+        <!-- 设置 -->
+        <activity
+            android:name=".activity.SettingsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:label="@string/title_settings" />
+
+        <!-- 自定义扫码界面 -->
+        <activity
+            android:name=".activity.CustomScanActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <!-- 接收资产 -->
+        <activity
+            android:name=".activity.ReceiveActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:label="@string/title_receive" />
+
+        <!-- 发送资产 -->
+        <activity
+            android:name=".activity.SendActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+            android:label="@string/title_send" />
+
+        <!-- 覆盖 ZXing 扫码 Activity，强制竖屏 -->
+        <activity
+            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+            android:screenOrientation="portrait"
+            tools:replace="android:screenOrientation" />
+
+    </application>
+
+</manifest>

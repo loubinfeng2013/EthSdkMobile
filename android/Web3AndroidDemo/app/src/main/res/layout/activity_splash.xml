@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_dark">
+
+    <!-- 左下角装饰光晕 -->
+    <View
+        android:id="@+id/glowLeft"
+        android:layout_width="280dp"
+        android:layout_height="280dp"
+        android:background="@drawable/bg_glow_circle"
+        android:alpha="0.12"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="-80dp"
+        android:layout_marginStart="-80dp" />
+
+    <!-- 右上角装饰光晕 -->
+    <View
+        android:id="@+id/glowRight"
+        android:layout_width="320dp"
+        android:layout_height="320dp"
+        android:background="@drawable/bg_glow_circle"
+        android:alpha="0.15"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="-80dp"
+        android:layout_marginEnd="-80dp" />
+
+    <!-- 中央内容区 -->
+    <LinearLayout
+        android:id="@+id/centerContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:alpha="0"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Icon 外发光圈 -->
+        <FrameLayout
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center">
+
+            <!-- 发光背景 -->
+            <View
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:background="@drawable/bg_glow_circle"
+                android:alpha="0.35" />
+
+            <!-- Icon -->
+            <ImageView
+                android:id="@+id/ivLogo"
+                android:layout_width="88dp"
+                android:layout_height="88dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_launcher_foreground"
+                android:contentDescription="@string/app_name" />
+
+        </FrameLayout>
+
+        <!-- App 名称 -->
+        <TextView
+            android:id="@+id/tvAppName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/app_name"
+            android:textColor="@color/text_primary"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.08" />
+
+        <!-- Slogan -->
+        <TextView
+            android:id="@+id/tvSlogan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/slogan"
+            android:textColor="@color/text_secondary"
+            android:textSize="14sp"
+            android:letterSpacing="0.04" />
+
+    </LinearLayout>
+
+    <!-- 底部加载指示器 -->
+    <LinearLayout
+        android:id="@+id/bottomLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:alpha="0"
+        android:layout_marginBottom="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="120dp"
+            android:layout_height="3dp"
+            android:indeterminate="true"
+            android:progressTint="@color/brand_accent"
+            android:indeterminateTint="@color/brand_accent" />
+
+        <TextView
+            android:id="@+id/tvLoadingHint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/splash_checking"
+            android:textColor="@color/text_hint"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

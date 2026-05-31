@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bg_dark">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingHorizontal="24dp"
+    android:paddingTop="28dp"
+    android:paddingBottom="32dp"
+    android:background="@color/bg_dark">
+
+    <!-- 顶部拖拽指示条 -->
+    <View
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="24dp"
+        android:background="#33FFFFFF" />
+
+    <!-- 标题区 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="20dp">
+
+        <LinearLayout
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:gravity="center"
+            android:background="@drawable/bg_icon_circle_accent">
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/ic_add"
+                android:contentDescription="@null" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="14dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dialog_add_token_title"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dialog_add_token_desc"
+                android:textSize="12sp"
+                android:textColor="@color/text_secondary"
+                android:layout_marginTop="2dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- 合约地址输入框 -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilContractAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/dialog_add_token_hint"
+        app:hintTextColor="@color/text_secondary"
+        app:boxStrokeColor="@color/brand_primary"
+        app:boxBackgroundColor="@color/card_surface"
+        app:endIconMode="clear_text"
+        app:endIconTint="@color/text_secondary"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusBottomEnd="12dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etContractAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_hint"
+            android:fontFamily="monospace"
+            android:inputType="text"
+            android:maxLines="2"
+            android:paddingVertical="16dp"
+            android:imeOptions="actionDone" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- 扫码按钮 -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnScanContract"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/btn_scan_qr"
+        android:textSize="14sp"
+        app:strokeColor="@color/brand_primary"
+        app:strokeWidth="1dp"
+        app:cornerRadius="12dp"
+        app:icon="@drawable/ic_qr_scan"
+        app:iconGravity="textStart"
+        app:iconPadding="8dp"
+        app:iconTint="@color/brand_primary"
+        android:textColor="@color/brand_primary" />
+
+    <!-- 安全提示 -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        app:cardBackgroundColor="#1A6C63FF"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="0dp"
+        app:strokeColor="#336C63FF"
+        app:strokeWidth="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="12dp">
+
+            <TextView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:text="ℹ"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:textColor="@color/brand_primary" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/dialog_add_token_tip"
+                android:textSize="11sp"
+                android:textColor="#AAAACC"
+                android:layout_marginStart="8dp"
+                android:lineSpacingMultiplier="1.4" />
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- 添加按钮 -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnConfirmAddToken"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/dialog_add_token_confirm"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:backgroundTint="@color/brand_primary"
+        app:cornerRadius="14dp"
+        app:icon="@drawable/ic_add"
+        app:iconGravity="textStart"
+        app:iconPadding="8dp" />
+
+</LinearLayout>
+
+<!-- Loading 覆盖层：查询 Token 信息时显示 -->
+<LinearLayout
+    android:id="@+id/layoutLoading"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="#CC111122"
+    android:visibility="gone"
+    android:minHeight="200dp">
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:indeterminateTint="@color/brand_primary" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/loading_token_info"
+        android:textColor="@color/text_secondary"
+        android:textSize="14sp" />
+
+</LinearLayout>
+
+</FrameLayout>

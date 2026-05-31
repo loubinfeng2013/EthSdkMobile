@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <!-- 私钥显示区域 -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/bg_dark"
+        app:cardCornerRadius="10dp"
+        app:strokeColor="@color/card_stroke"
+        app:strokeWidth="1dp"
+        app:cardElevation="0dp">
+
+        <TextView
+            android:id="@+id/tvPrivateKey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="14dp"
+            android:textColor="@color/brand_accent"
+            android:textSize="13sp"
+            android:fontFamily="monospace"
+            android:lineSpacingMultiplier="1.5"
+            android:breakStrategy="simple"
+            android:hyphenationFrequency="none"
+            android:textIsSelectable="true" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- 操作按钮行 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="14dp"
+        android:gravity="end">
+
+        <!-- 明文/密文切换 -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnToggleVisibility"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="@string/btn_show_private_key"
+            android:textSize="13sp"
+            android:layout_marginEnd="8dp"
+            app:cornerRadius="20dp"
+            app:strokeColor="@color/brand_primary"
+            android:textColor="@color/brand_primary"
+            app:icon="@drawable/ic_visibility_off"
+            app:iconSize="16dp"
+            app:iconTint="@color/brand_primary" />
+
+        <!-- 复制 -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCopyKey"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="@string/btn_copy_key"
+            android:textSize="13sp"
+            app:cornerRadius="20dp"
+            app:strokeColor="@color/brand_accent"
+            android:textColor="@color/brand_accent"
+            app:icon="@drawable/ic_copy"
+            app:iconSize="16dp"
+            app:iconTint="@color/brand_accent" />
+
+    </LinearLayout>
+
+    <!-- 安全提示 -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="@string/settings_private_key_warning"
+        android:textColor="@color/text_secondary"
+        android:textSize="11sp"
+        android:drawablePadding="4dp"
+        android:gravity="center_vertical" />
+
+</LinearLayout>

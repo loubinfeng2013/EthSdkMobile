@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.MyApp" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/brand_primary</item>
+        <item name="colorPrimaryVariant">@color/brand_primary_dark</item>
+        <item name="colorSecondary">@color/brand_accent</item>
+        <item name="android:windowBackground">@color/bg_dark</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/bg_dark</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+    <style name="TabTextStyle" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- 全局对话框主题：深色背景 + 品牌紫色按钮 -->
+    <style name="Web3AlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <!-- 对话框容器背景 -->
+        <item name="android:background">@color/card_surface</item>
+        <!-- 标题文字颜色 -->
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <!-- 正文文字颜色 -->
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+        <!-- 按钮颜色（Positive / Negative / Neutral）使用品牌色 -->
+        <item name="buttonBarPositiveButtonStyle">@style/Web3Dialog.Button.Positive</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Web3Dialog.Button.Negative</item>
+        <item name="buttonBarNeutralButtonStyle">@style/Web3Dialog.Button.Neutral</item>
+        <!-- 圆角 -->
+        <item name="shapeAppearanceOverlay">@style/Web3Dialog.Shape</item>
+    </style>
+
+    <style name="Web3Dialog.Button.Positive" parent="Widget.Material3.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/brand_primary</item>
+    </style>
+
+    <style name="Web3Dialog.Button.Negative" parent="Widget.Material3.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/brand_accent</item>
+    </style>
+
+    <style name="Web3Dialog.Button.Neutral" parent="Widget.Material3.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/text_secondary</item>
+    </style>
+
+    <style name="Web3Dialog.Shape" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
+    <style name="BottomSheetDialogTheme" parent="Theme.Material3.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
+    </style>
+
+    <style name="BottomSheetStyle" parent="Widget.Material3.BottomSheet.Modal">
+        <item name="backgroundTint">@color/bg_dark</item>
+        <item name="android:backgroundTint">@color/bg_dark</item>
+        <item name="shapeAppearance">@style/BottomSheetShapeAppearance</item>
+    </style>
+
+    <style name="BottomSheetShapeAppearance" parent="ShapeAppearance.Material3.LargeComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">24dp</item>
+        <item name="cornerSizeTopRight">24dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+    </style>
+</resources>
