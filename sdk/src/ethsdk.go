@@ -22,12 +22,15 @@ import (
 
 // 全局变量和常量
 const (
-	MainNetWork    = "wss://ethereum.publicnode.com"
-	SepoliaNetWork = "wss://sepolia.infura.io/ws/v3/1b3dddb22a464e11afd288a372fb8aef"
+	MainWss      = "wss://ethereum.publicnode.com"
+	MainHttps    = "https://ethereum.publicnode.com"
+	SepoliaWss   = "wss://sepolia.infura.io/ws/v3/1b3dddb22a464e11afd288a372fb8aef"
+	SepoliaHttps = "https://sepolia.infura.io/v3/1b3dddb22a464e11afd288a372fb8aef"
 )
 
 var (
-	client        *ethclient.Client
+	httpsClient   *ethclient.Client
+	wssClient     *ethclient.Client
 	netWorkUrl    string
 	callback      EthListenerCallback
 	lastSubToken  ethereum.Subscription
@@ -51,18 +54,39 @@ func SetEthListenerCallback(cb EthListenerCallback) {
 // 根据url初始化sdk
 // url: 网络url
 // return: 成功返回true，失败false
-func InitWithUrl(url string) bool {
-	if url == "" {
+func InitWithUrl(httpsUrl string, wssUrl string) bool {
+	if httpsUrl == "" || wssUrl == "" || !strings.HasPrefix(httpsUrl, "https://") || !strings.HasPrefix(wssUrl, "wss://") {
 		return false
 	}
 	var err error
-	client, err = ethclient.Dial(url)
+	httpsClient, err = ethclient.Dial(httpsUrl)
 	if err != nil {
-		fmt.Println("InitWithUrl Fail: ", url, " Error: ", err)
+		fmt.Println("InitWithUrl Fail: ", httpsUrl, " Error: ", err)
 		return false
 	}
-	fmt.Println("InitWithUrl Success: ", url)
-	netWorkUrl = url
+	wssClient, err = ethclient.Dial(wssUrl)
+	if err != nil {
+		fmt.Println("InitWithUrl Fail: ", wssUrl, " Error: ", err)
+		return false
+	}
+	//保证链接可用，初始化耗时会增加
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	_, err = httpsClient.BlockNumber(ctx)
+	if err != nil {
+		fmt.Println("InitWithUrl Fail: ", httpsUrl, " Error: ", err)
+		return false
+	}
+	ctxWss, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	_, err = wssClient.BlockNumber(ctxWss)
+	if err != nil {
+		fmt.Println("InitWithUrl Fail: ", wssUrl, " Error: ", err)
+		return false
+	}
+
+	fmt.Println("InitWithUrl Success")
+	netWorkUrl = strings.TrimPrefix(httpsUrl, "https://")
 	return true
 }
 
@@ -71,21 +95,25 @@ func InitWithUrl(url string) bool {
 // return: 成功返回true，失败false
 func InitWithType(netWorkType int) bool {
 	if netWorkType == 1 {
-		return InitWithUrl(SepoliaNetWork)
+		return InitWithUrl(SepoliaHttps, SepoliaWss)
 	}
-	return InitWithUrl(MainNetWork)
+	return InitWithUrl(MainHttps, MainWss)
 }
 
 // 反初始化sdk
 func UInit() {
-	if client != nil {
-		client.Close()
-		client = nil
+	if httpsClient != nil {
+		httpsClient.Close()
+		httpsClient = nil
+	}
+	if wssClient != nil {
+		wssClient.Close()
+		wssClient = nil
 	}
 }
 
 // 返回当前web3网络
-// return: 网络url
+// return: 网络Name
 func GetNetWorkUrl() string {
 	return netWorkUrl
 }
@@ -96,6 +124,7 @@ func GetAddressByPrivateKey(privateKey string) string {
 	if !IsValidEthPrivateKey(privateKey) {
 		return ""
 	}
+	privateKey = strings.TrimPrefix(privateKey, "0x")
 	privKey, err := crypto.HexToECDSA(privateKey)
 	if err != nil {
 		fmt.Println("GetAddressByPrivateKey Fail : ", err)
@@ -156,11 +185,11 @@ func IsValidEthPrivateKey(key string) bool {
 // address: 账户地址
 // return: 合约地址返回1，普通地址返回2
 func GetEthAddressType(address string) int {
-	if client == nil {
+	if httpsClient == nil {
 		return 0
 	}
 	addr := common.HexToAddress(address)
-	byteCode, err := client.CodeAt(context.Background(), addr, nil)
+	byteCode, err := httpsClient.CodeAt(context.Background(), addr, nil)
 	if err != nil {
 		fmt.Println("GetEthAddressType Fail : ", err)
 		return 0
@@ -177,12 +206,12 @@ func GetEthAddressType(address string) int {
 // address: 账户地址
 // return: 账户余额(ETH)
 func GetBalanceAtAddress(address string) string {
-	if client == nil {
+	if httpsClient == nil {
 		fmt.Println("GetBalanceAtAddress Fail : Need Init")
 		return ""
 	}
 	account := common.HexToAddress(address)
-	balance, err := client.BalanceAt(context.Background(), account, nil)
+	balance, err := httpsClient.BalanceAt(context.Background(), account, nil)
 	if err != nil {
 		fmt.Println("GetBalanceAtAddress Fail : ", err)
 	}
@@ -196,9 +225,14 @@ func GetBalanceAtAddress(address string) string {
 // toAddress: 数额(ETH)
 // return: 是返回true，否false
 func SendEth(fromPrivateKey string, toAddress string, val string) bool {
-	if client == nil {
+	if httpsClient == nil {
 		return false
 	}
+	if !IsValidEthPrivateKey(fromPrivateKey) {
+		return false
+	}
+	fromPrivateKey = strings.TrimPrefix(fromPrivateKey, "0x")
+
 	num, ok := new(big.Float).SetString(val)
 	if !ok {
 		fmt.Println("SendEth Fail : Val Error ,", val)
@@ -211,12 +245,12 @@ func SendEth(fromPrivateKey string, toAddress string, val string) bool {
 	}
 	fromAddr := crypto.PubkeyToAddress(privateKey.PublicKey)
 	toAddr := common.HexToAddress(toAddress)
-	nonce, err := client.PendingNonceAt(context.Background(), fromAddr)
+	nonce, err := httpsClient.PendingNonceAt(context.Background(), fromAddr)
 	if err != nil {
 		fmt.Println("SendEth Fail : ", err)
 		return false
 	}
-	gasPrice, err := client.SuggestGasPrice(context.Background())
+	gasPrice, err := httpsClient.SuggestGasPrice(context.Background())
 
 	gasPrice = new(big.Int).Mul(gasPrice, big.NewInt(12))
 	gasPrice = new(big.Int).Div(gasPrice, big.NewInt(10)) // 提高 20%
@@ -227,7 +261,7 @@ func SendEth(fromPrivateKey string, toAddress string, val string) bool {
 		return false
 	}
 	tx := types.NewTransaction(nonce, toAddr, utils.EthToWei(num), gasLimit, gasPrice, []byte{})
-	chainID, err := client.ChainID(context.Background())
+	chainID, err := httpsClient.ChainID(context.Background())
 	if err != nil {
 		fmt.Println("SendEth Fail : ", err)
 		return false
@@ -238,7 +272,7 @@ func SendEth(fromPrivateKey string, toAddress string, val string) bool {
 		return false
 	}
 	fmt.Println("SendEth Start")
-	err = client.SendTransaction(context.Background(), signedTx)
+	err = httpsClient.SendTransaction(context.Background(), signedTx)
 	if err != nil {
 		fmt.Println("SendEth Fail : ", err)
 		return false
@@ -246,7 +280,7 @@ func SendEth(fromPrivateKey string, toAddress string, val string) bool {
 	ctxTimeout, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 	fmt.Println("WaitMined Start")
-	receipt, err2 := bind.WaitMined(ctxTimeout, client, signedTx)
+	receipt, err2 := bind.WaitMined(ctxTimeout, httpsClient, signedTx)
 	fmt.Println("WaitMined End")
 	if err2 != nil {
 		fmt.Println("SendEth Fail : ", err2)
@@ -265,7 +299,7 @@ func SendEth(fromPrivateKey string, toAddress string, val string) bool {
 // address: 账户地址
 // return: 账户余额(ETH)
 func GetTokenBalanceAtAddress(address string, erc20Addr string) string {
-	if client == nil {
+	if httpsClient == nil {
 		fmt.Println("GetTokenBalanceAtAddress Fail : Need Init")
 		return ""
 	}
@@ -276,7 +310,7 @@ func GetTokenBalanceAtAddress(address string, erc20Addr string) string {
 		return ""
 	}
 	tokenAddr := common.HexToAddress(erc20Addr)
-	token, err := erc20.NewErc20(tokenAddr, client)
+	token, err := erc20.NewErc20(tokenAddr, httpsClient)
 	if err != nil {
 		return ""
 	}
@@ -294,7 +328,7 @@ func GetTokenBalanceAtAddress(address string, erc20Addr string) string {
 // address: 合约地址
 // return: Name
 func GetTokenNameAtAddress(erc20Addr string) string {
-	if client == nil {
+	if httpsClient == nil {
 		fmt.Println("GetTokenNameAtAddress Fail : Need Init")
 		return ""
 	}
@@ -305,7 +339,7 @@ func GetTokenNameAtAddress(erc20Addr string) string {
 		return ""
 	}
 	tokenAddr := common.HexToAddress(erc20Addr)
-	token, err := erc20.NewErc20(tokenAddr, client)
+	token, err := erc20.NewErc20(tokenAddr, httpsClient)
 	if err != nil {
 		return ""
 	}
@@ -320,7 +354,7 @@ func GetTokenNameAtAddress(erc20Addr string) string {
 // address: 合约地址
 // return: Symbol
 func GetTokenSymbolAtAddress(erc20Addr string) string {
-	if client == nil {
+	if httpsClient == nil {
 		fmt.Println("GetTokenNameAtAddress Fail : Need Init")
 		return ""
 	}
@@ -331,7 +365,7 @@ func GetTokenSymbolAtAddress(erc20Addr string) string {
 		return ""
 	}
 	tokenAddr := common.HexToAddress(erc20Addr)
-	token, err := erc20.NewErc20(tokenAddr, client)
+	token, err := erc20.NewErc20(tokenAddr, httpsClient)
 	if err != nil {
 		return ""
 	}
@@ -346,7 +380,7 @@ func GetTokenSymbolAtAddress(erc20Addr string) string {
 // address: 账户地址
 // return: 是返回true，否false
 func CheckErc20Address(address string) bool {
-	if client == nil {
+	if httpsClient == nil {
 		fmt.Println("CheckErc20Address Fail : Need Init")
 		return false
 	}
@@ -357,7 +391,7 @@ func CheckErc20Address(address string) bool {
 		return false
 	}
 	erc20Addr := common.HexToAddress(address)
-	token, err := erc20.NewErc20(erc20Addr, client)
+	token, err := erc20.NewErc20(erc20Addr, httpsClient)
 	if err != nil {
 		return false
 	}
@@ -379,19 +413,23 @@ func CheckErc20Address(address string) bool {
 
 // 发送erc20 token
 func SendErc20Token(fromPrivateKey string, toAddress string, val string, erc20Addr string) bool {
-	if client == nil {
+	if httpsClient == nil {
 		return false
 	}
 	if !CheckErc20Address(erc20Addr) {
 		return false
 	}
+	if !IsValidEthPrivateKey(fromPrivateKey) {
+		return false
+	}
+	fromPrivateKey = strings.TrimPrefix(fromPrivateKey, "0x")
 	tokenAddr := common.HexToAddress(erc20Addr)
-	token, err := erc20.NewErc20(tokenAddr, client)
+	token, err := erc20.NewErc20(tokenAddr, httpsClient)
 	if err != nil {
 		return false
 	}
 	privKey, _ := crypto.HexToECDSA(fromPrivateKey)
-	chainID, _ := client.ChainID(context.Background())
+	chainID, _ := httpsClient.ChainID(context.Background())
 	decimals, _ := token.Decimals(nil)
 	value, _ := utils.TokenToRaw(val, decimals)
 	toAddr := common.HexToAddress(toAddress)
@@ -403,7 +441,7 @@ func SendErc20Token(fromPrivateKey string, toAddress string, val string, erc20Ad
 	ctxTimeout, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 	fmt.Println("WaitMined Start")
-	receipt, err2 := bind.WaitMined(ctxTimeout, client, tx)
+	receipt, err2 := bind.WaitMined(ctxTimeout, httpsClient, tx)
 	fmt.Println("WaitMined End")
 	if err2 != nil {
 		fmt.Println("SendErc20Token Fail : ", err2)
@@ -419,7 +457,7 @@ func SendErc20Token(fromPrivateKey string, toAddress string, val string, erc20Ad
 // 设置接受token监听
 func AddErc20TokenReceviceListener(walletAddr string) {
 
-	if client == nil {
+	if wssClient == nil {
 		return
 	}
 
@@ -445,8 +483,11 @@ func AddErc20TokenReceviceListener(walletAddr string) {
 
 	query := ethereum.FilterQuery{Topics: topics}
 
-	// 🔥 独立 goroutine，不阻塞
+	// 独立 goroutine，不阻塞
 	go func() {
+		const maxRetries = 3
+		failCount := 0
+
 		for {
 			select {
 			case <-stopTokenChan:
@@ -458,15 +499,25 @@ func AddErc20TokenReceviceListener(walletAddr string) {
 			if callback != nil {
 				callback.OnListenerStateChange(1, 4, "订阅开始")
 			}
-			sub, err := client.SubscribeFilterLogs(context.Background(), query, logs)
+			sub, err := wssClient.SubscribeFilterLogs(context.Background(), query, logs)
 
 			if err != nil {
+				failCount++
 				if callback != nil {
-					callback.OnListenerStateChange(1, 1, "订阅失败: "+err.Error())
+					callback.OnListenerStateChange(1, 1, fmt.Sprintf("订阅失败(%d/%d): %s", failCount, maxRetries, err.Error()))
+				}
+				if failCount >= maxRetries {
+					if callback != nil {
+						callback.OnListenerStateChange(1, 3, "订阅失败次数超限，放弃重试")
+					}
+					return
 				}
 				time.Sleep(3 * time.Second)
 				continue
 			}
+
+			// 订阅成功，重置失败计数
+			failCount = 0
 
 			mutex.Lock()
 			lastSubToken = sub

@@ -92,7 +92,7 @@ public class SplashActivity extends AppCompatActivity {
                     Toast.makeText(this, R.string.splash_sdk_init_fail, Toast.LENGTH_LONG).show();
                     finishAffinity();
                 }
-            },5000);
+            },10000);
         }
     }
 

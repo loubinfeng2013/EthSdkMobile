@@ -128,14 +128,6 @@ public class WalletPrefs {
         return list.isEmpty() ? defaultNetworks() : list;
     }
 
-    /** 追加一个自定义网络 URL */
-    public static void addNetwork(Context context, String url) {
-        List<String> list = getNetworkList(context);
-        if (list.contains(url)) return;
-        list.add(url);
-        saveNetworkList(context, list);
-    }
-
     private static void saveNetworkList(Context context, List<String> list) {
         getPrefs(context).edit()
                 .putString(KEY_NETWORK_LIST, new JSONArray(list).toString())

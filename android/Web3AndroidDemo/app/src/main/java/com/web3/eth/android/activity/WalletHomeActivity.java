@@ -95,7 +95,11 @@ public class WalletHomeActivity extends AppCompatActivity {
                                         runOnUiThread(() -> tokenAdapter.clearToken());
                                         EthClient.stopAllListeners();//停止监听
                                         EthClient.uInit();//销毁链接
-                                        App.sdkInitialized = EthClient.initWithUrl(url);//用新url重新初始化
+                                        if (url.contains("sepolia")){
+                                            App.sdkInitialized = EthClient.initWithType(1);//用新url重新初始化
+                                        }else{
+                                            App.sdkInitialized = EthClient.initWithType(0);//用新url重新初始化
+                                        }
                                         String address = WalletPrefs.getWalletAddress(getBaseContext());
                                         EthClient.addErc20TokenReceviceListener(address);//创建监听
                                         //数字资产也要刷新下,token列表要重新获取
@@ -143,7 +147,7 @@ public class WalletHomeActivity extends AppCompatActivity {
         setupSwipeRefresh();
         setupNetworkCard();
         loadWalletData();
-
+        //这里也可以不订阅,订阅会失败，客户端和节点保持长链接会消耗性能，主动刷新也可以
         new android.os.Handler(android.os.Looper.getMainLooper()).postDelayed(() ->
             executor.execute(() -> {
                 EthClient.setEthListenerCallback(callback);

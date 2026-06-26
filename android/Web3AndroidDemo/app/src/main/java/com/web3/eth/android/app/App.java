@@ -94,10 +94,10 @@ public class App extends Application {
         new Thread(() -> {
             String url = WalletPrefs.getCurrentNetwork(this);
             boolean result;
-            if (TextUtils.isEmpty(url)){
+            if (TextUtils.isEmpty(url) || url.contains("sepolia")){
                 result = EthClient.initWithType(1);
             }else{
-                result = EthClient.initWithUrl(url);
+                result = EthClient.initWithType(0);
             }
             sdkInitialized = result;
             Log.d(TAG, "EthClient init result: " + result);
